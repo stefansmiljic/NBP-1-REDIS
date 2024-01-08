@@ -1,8 +1,25 @@
 ﻿@page
 <div class="container">
     <div class="row p-1">
+        <div class="col-1">Create room</div>
+        <div class="col-4"><input type="text" id="roomName" /></div>
+        <div class="col-1"><input type="button" id="addRoom" value="Add room" /></div>
+    </div>
+    <div class="row p-1">
+        <div class="col-1">Join room</div>
+        <!--<div class="col-4"><input type="text" id="joinRoomName" /></div>
+        </div>-->
+        <div class="col-4">
+        <select id="roomSelector">
+        <option value="General">General</option>
+        </select>
+        </div>
+        <div class="col-1"><input type="button" id="joinRoom" value="Join room" /></div>
+    
+    </div>
+    <div class="row p-1">
         <div class="col-1">User</div>
-        <div class="col-5"><input type="text" id="userInput" /></div>
+        <div class="col-5"><input type="text" id="userInput" required/></div>
     </div>
     <div class="row p-1">
         <div class="col-1">Message</div>

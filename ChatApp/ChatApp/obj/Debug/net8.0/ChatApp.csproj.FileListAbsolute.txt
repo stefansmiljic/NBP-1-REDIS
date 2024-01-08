@@ -35,3 +35,41 @@ D:\AKADEMSKI MATERIJAL\NBP PROJEKAT REDIS\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\
 D:\AKADEMSKI MATERIJAL\NBP PROJEKAT REDIS\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ref\ChatApp.dll
 D:\AKADEMSKI MATERIJAL\NBP PROJEKAT REDIS\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\Pipelines.Sockets.Unofficial.dll
 D:\AKADEMSKI MATERIJAL\NBP PROJEKAT REDIS\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\StackExchange.Redis.dll
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\appsettings.Development.json
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\appsettings.json
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\ChatApp.staticwebassets.runtime.json
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\ChatApp.exe
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\ChatApp.deps.json
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\ChatApp.runtimeconfig.json
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\ChatApp.dll
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\ChatApp.pdb
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\Microsoft.AspNetCore.Http.Connections.Client.dll
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Client.dll
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Client.Core.dll
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\Pipelines.Sockets.Unofficial.dll
+D:\NBP-1-REDIS\ChatApp\ChatApp\bin\Debug\net8.0\StackExchange.Redis.dll
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.csproj.AssemblyReference.cache
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.GeneratedMSBuildEditorConfig.editorconfig
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.AssemblyInfoInputs.cache
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.AssemblyInfo.cs
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.csproj.CoreCompileInputs.cache
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.MvcApplicationPartsAssemblyInfo.cache
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.RazorAssemblyInfo.cache
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.RazorAssemblyInfo.cs
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.sourcelink.json
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\staticwebassets.build.json
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\staticwebassets.development.json
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\staticwebassets\msbuild.ChatApp.Microsoft.AspNetCore.StaticWebAssets.props
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\staticwebassets\msbuild.build.ChatApp.props
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.ChatApp.props
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.ChatApp.props
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\staticwebassets.pack.json
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\scopedcss\bundle\ChatApp.styles.css
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\scopedcss\projectbundle\ChatApp.bundle.scp.css
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.csproj.CopyComplete
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.dll
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\refint\ChatApp.dll
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.pdb
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ChatApp.genruntimeconfig.cache
+D:\NBP-1-REDIS\ChatApp\ChatApp\obj\Debug\net8.0\ref\ChatApp.dll
