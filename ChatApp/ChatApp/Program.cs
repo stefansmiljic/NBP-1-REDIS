@@ -9,7 +9,6 @@ builder.Services.AddHostedService<RedisNotificationService>();
 builder.Services.AddSignalR();
 
 builder.Services.AddSingleton<RedisConnection>(redisCon);
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

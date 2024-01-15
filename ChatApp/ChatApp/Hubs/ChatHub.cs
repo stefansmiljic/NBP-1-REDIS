@@ -8,19 +8,21 @@ namespace ChatApp.Hubs
     public class ChatHub : Hub
     {
         private IDatabase redis;
+        //private IHostedService<RedisNotificationService> notificationService;
         public ChatHub(RedisConnection rc)
         {
             redis = rc.GetDatabase();
+            ActiveRooms = redis.SetMembers("ActiveRooms").Select(r=>r.ToString()).ToList();
         }
 
         private static readonly ConcurrentDictionary<string, string> UserToRoomMap = new ConcurrentDictionary<string, string>();
-        private static readonly List<string> ActiveRooms = new List<string>();
+        private static List<string> ActiveRooms;
 
         public async Task CreateRoom(string roomName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
             UserToRoomMap[Context.ConnectionId] = roomName;
-             if (!ActiveRooms.Contains(roomName))
+            if (!ActiveRooms.Contains(roomName))
             {
                 ActiveRooms.Add(roomName);
                 await Clients.All.SendAsync("ReceiveActiveRooms", ActiveRooms);
@@ -42,9 +44,10 @@ namespace ChatApp.Hubs
                 await Clients.All.SendAsync("ReceiveActiveRooms", ActiveRooms);
             }
             await Clients.Caller.SendAsync("JoinedRoom", roomName);
-            var msgClass = new Message(Context.ConnectionId, "System", DateTime.Now, roomName);
+            var msgClass = new Message($"User {Context.ConnectionId} joined the room.", "System", DateTime.Now, roomName);
             // Notify the group that a user has joined
-            await Clients.Group(roomName).SendAsync("ReceiveMessage", $"{msgClass.text} joined the room, {msgClass.user}, {msgClass.time}, {msgClass.RoomName}" );
+            // await Clients.Group(roomName).SendAsync("ReceiveMessage", $"{msgClass.text} joined the room, {msgClass.user}, {msgClass.time}, {msgClass.RoomName}" );
+            await Clients.GroupExcept(roomName, new []{Context.ConnectionId}).SendAsync("ReceiveMessage", msgClass);
             var messagesFromRoom = await GetOlderMessages(roomName);
             await Clients.Caller.SendAsync("ReceiveMessageList", messagesFromRoom);
         }
@@ -55,10 +58,16 @@ namespace ChatApp.Hubs
             await Clients.All.SendAsync("ReceiveActiveRooms", activeRooms.Select(r => r.ToString()));
         }
 
+        private async Task GetActiveRooms()
+        {
+            var activeRooms = await redis.SetMembersAsync("ActiveRooms");
+            await Clients.Caller.SendAsync("ReceiveActiveRooms", activeRooms.Select(r => r.ToString()));
+        }
+
         public async Task SendMessage(string roomName, string user, string message)
         {
             var msgClass = new Message(message, user, DateTime.Now, roomName);
-            await redis.PublishAsync("sendPubSub", JsonSerializer.Serialize<Message>(msgClass));
+            await redis.PublishAsync($"sendPubSub", JsonSerializer.Serialize<Message>(msgClass));
         }
 
         private async Task<List<Message>> GetOlderMessages(string roomName)
@@ -78,7 +87,7 @@ namespace ChatApp.Hubs
 
         public override async Task OnConnectedAsync()
         {
-           var messages = await redis.StreamRangeAsync("send");
+           /*var messages = await redis.StreamRangeAsync("send");
            List<Message> list = new List<Message>();
            foreach(var msg in messages)
            {
@@ -86,9 +95,9 @@ namespace ChatApp.Hubs
               var msg_ds = JsonSerializer.Deserialize<Message>(msg_str);
               list.Add(msg_ds!);
            }
-           await Clients.Caller.SendAsync("ReceiveMessageList", list);
+           await Clients.Caller.SendAsync("ReceiveMessageList", list);*/
            await Clients.Caller.SendAsync("ReceiveActiveRooms", ActiveRooms);
-           await UpdateActiveRooms();
+           await GetActiveRooms();
            await base.OnConnectedAsync();
         }
 
@@ -107,8 +116,6 @@ namespace ChatApp.Hubs
                     ActiveRooms.Remove(roomName);
                     await Clients.All.SendAsync("ReceiveActiveRooms", ActiveRooms);
                 }
-
-                
             }
 
             await base.OnDisconnectedAsync(exception);

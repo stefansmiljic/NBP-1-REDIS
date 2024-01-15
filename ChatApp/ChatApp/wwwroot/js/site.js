@@ -14,14 +14,15 @@ connection.on("ReceiveMessageList", function (messagesFromRoom) {
         document.getElementById("messagesList").appendChild(li);
         let user = messagesFromRoom[i].user;
         let message = messagesFromRoom[i].text;
-        let time = messagesFromRoom[i].time;
-        var datum = new Date(time).toLocaleDateString("sr-RS");
-        var vreme = new Date(time).toLocaleTimeString("sr-RS");
+        //let time = messagesFromRoom[i].time;
+        //var datum = new Date(time).toLocaleDateString("sr-RS");
+        //var vreme = new Date(time).toLocaleTimeString("sr-RS");
     
         // We can assign user-supplied strings to an element's textContent because it
         // is not interpreted as markup. If you're assigning in any other way, you 
         // should be aware of possible script injection concerns.
-         li.textContent = `${user} says ${message} at ${datum} : ${vreme}`;
+        // li.textContent = `${user} says ${message} at ${datum} : ${vreme}`;
+        li.textContent = `${user}: ${message}`;
     }
 });
 
@@ -48,15 +49,16 @@ function updateRoomList(activeRooms) {
     });
 }
 
-connection.on("ReceiveMessage", function (user, text, time) {
+connection.on("ReceiveMessage", function (msg) {
         var li = document.createElement("li");
         document.getElementById("messagesList").appendChild(li);
-        var datum = new Date(time).toLocaleDateString("sr-RS");
-        var vreme = new Date(time).toLocaleTimeString("sr-RS");
+        // var datum = new Date(time).toLocaleDateString("sr-RS");
+        // var vreme = new Date(time).toLocaleTimeString("sr-RS");
         // We can assign user-supplied strings to an element's textContent because it
         // is not interpreted as markup. If you're assigning in any other way, you 
         // should be aware of possible script injection concerns.
-        li.textContent = `${user} says ${text} at ${datum} : ${vreme}`;
+        // li.textContent = `${user} says ${text} at ${datum} : ${vreme}`;
+        li.textContent = `${msg.user}: ${msg.text}`;
 });
 
 connection.start().then(function () {
@@ -90,25 +92,6 @@ document.getElementById("joinRoom").addEventListener("click", function (event) {
     connection.invoke("JoinRoom", room).catch(function (err) {
         return console.error(err.toString());
     });
-    /*connection.invoke("getOlderMessages", room).catch(function (err) {
-        return console.error(err.toString());
-    });
-    for(var i = 0; i<messagesFromRoom.length; i++ )
-    {
-        console.log(messagesFromRoom[i].text)
-        var li = document.createElement("li");
-        document.getElementById("messagesList").appendChild(li);
-        let user = messagesFromRoom[i].user;
-        let message = messagesFromRoom[i].text;
-        let time = messagesFromRoom[i].time;
-        var datum = new Date(time).toLocaleDateString("sr-RS");
-        var vreme = new Date(time).toLocaleTimeString("sr-RS");
-    
-        // We can assign user-supplied strings to an element's textContent because it
-        // is not interpreted as markup. If you're assigning in any other way, you 
-        // should be aware of possible script injection concerns.
-         li.textContent = `${user} says ${message} at ${datum} : ${vreme}`;
-    }*/
     event.preventDefault();
     console.log(room)
 });
