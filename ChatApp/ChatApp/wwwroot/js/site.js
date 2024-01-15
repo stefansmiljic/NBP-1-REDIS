@@ -2,11 +2,9 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 var prikaziPoruke = false;
-//Disable the send button until connection is established.
-document.getElementById("sendButton").disabled = true;
+var poruka = false;
 
 connection.on("ReceiveMessageList", function (messagesFromRoom) {
-    console.log(messagesFromRoom.length)
     for(var i = 0; i<messagesFromRoom.length; i++ )
     {
         console.log(messagesFromRoom[i].text)
@@ -50,6 +48,7 @@ function updateRoomList(activeRooms) {
 }
 
 connection.on("ReceiveMessage", function (msg) {
+        console.log(msg);
         var li = document.createElement("li");
         document.getElementById("messagesList").appendChild(li);
         // var datum = new Date(time).toLocaleDateString("sr-RS");
@@ -88,13 +87,32 @@ document.getElementById("addRoom").addEventListener("click", function (event) {
 });
 
 document.getElementById("joinRoom").addEventListener("click", function (event) {
+    let x = document.getElementById("userInput").value;
+    if (x == "") {
+        alert("Username must be filled out");
+        return false;
+    }
+    document.querySelector("#sendButton").style.visibility = 'visible';
+    document.querySelector("#messageInput").style.visibility = 'visible';
+    document.querySelector("#messageParagraph").style.visibility = 'visible';
     var room = document.getElementById("roomSelector").value;
+    document.querySelector(".currentRoom").value = room;
+    document.body.style.backgroundColor = "#402b80";
+    document.body.style.color = "white";
+    document.body.style.transition = '1500ms';
+    document.getElementById("userInput").disabled = true;
     connection.invoke("JoinRoom", room).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
     console.log(room)
 });
+
+window.addEventListener("load", function() {
+    document.querySelector("#sendButton").style.visibility = 'hidden';
+    document.querySelector("#messageInput").style.visibility = 'hidden';
+    document.querySelector("#messageParagraph").style.visibility = 'hidden';
+})
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var user = document.getElementById("userInput").value;

@@ -1,11 +1,40 @@
 ﻿@page
+<style>
+    .currentRoom {
+        border: none;
+        font-size: 36px;
+        font-weight: bold;
+        background-color: transparent;
+        color: white;
+        padding-left: 0px;
+    }
+
+    #polje {
+        border-bottom: 1px solid rgb(139, 139, 139);
+        margin-bottom: 15px;
+    }
+
+    input {
+        border-radius: 7px;
+        border: 1px solid black;
+        padding-left: 10px;
+    }
+
+    input[type=button] {
+        background-color: #b5e6ff;
+        border: none;
+    }
+</style>
 <div class="container">
     <div class="row p-1">
+        <div class="col-1"><input type="text" class="currentRoom" disabled></div>
+    </div>
+    <div class="row p-1" id="polje">
         <div class="col-1">Create room</div>
         <div class="col-4"><input type="text" id="roomName" /></div>
         <div class="col-1"><input type="button" id="addRoom" value="Add room" /></div>
     </div>
-    <div class="row p-1">
+    <div class="row p-1" id="polje">
         <div class="col-1">Join room</div>
         <!--<div class="col-4"><input type="text" id="joinRoomName" /></div>
         </div>-->
@@ -17,12 +46,12 @@
         <div class="col-1"><input type="button" id="joinRoom" value="Join room" /></div>
     
     </div>
-    <div class="row p-1">
+    <div class="row p-1" id="polje">
         <div class="col-1">User</div>
         <div class="col-5"><input type="text" id="userInput" required/></div>
     </div>
     <div class="row p-1">
-        <div class="col-1">Message</div>
+        <div class="col-1"><p id="messageParagraph">Message</p></div>
         <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
     </div>
     <div class="row p-1">
@@ -42,4 +71,4 @@
     </div>
 </div>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
+<script src="~/js/site.js"></script>
