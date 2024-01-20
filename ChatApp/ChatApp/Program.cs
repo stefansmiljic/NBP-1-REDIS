@@ -1,4 +1,5 @@
 using ChatApp.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 var redisCon = new RedisConnection("127.0.0.1");
@@ -7,6 +8,9 @@ var redisCon = new RedisConnection("127.0.0.1");
 builder.Services.AddRazorPages();
 builder.Services.AddHostedService<RedisNotificationService>();
 builder.Services.AddSignalR();
+builder.Services.Configure<HubOptions>(options => {
+    options.MaximumReceiveMessageSize = null;
+});
 
 builder.Services.AddSingleton<RedisConnection>(redisCon);
 var app = builder.Build();

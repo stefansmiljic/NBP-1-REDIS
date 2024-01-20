@@ -8,38 +8,45 @@ connection.on("ReceiveMessageList", function (messagesFromRoom) {
     document.getElementById("messagesList").innerHTML="";
     for(var i = 0; i<messagesFromRoom.length; i++ )
     {
-        console.log(messagesFromRoom[i].text)
+        console.log("IZ PRVOG: " + JSON.stringify(messagesFromRoom[i]))
         var li = document.createElement("li");
         document.getElementById("messagesList").appendChild(li);
         let user = messagesFromRoom[i].user;
         let message = messagesFromRoom[i].text;
-        //let time = messagesFromRoom[i].time;
-        //var datum = new Date(time).toLocaleDateString("sr-RS");
-        //var vreme = new Date(time).toLocaleTimeString("sr-RS");
-    
-        // We can assign user-supplied strings to an element's textContent because it
-        // is not interpreted as markup. If you're assigning in any other way, you 
-        // should be aware of possible script injection concerns.
-        // li.textContent = `${user} says ${message} at ${datum} : ${vreme}`;
-        li.textContent = `${user}: ${message}`;
+        let image = messagesFromRoom[i].image;
+        let dateTime = messagesFromRoom[i].time;
+        var dt = new Date(dateTime);
+        var date = dt.toLocaleDateString();
+        var time = dt.toLocaleTimeString("sr-Latn-RS", {hour: '2-digit', minute:'2-digit'});
+        var mybr = document.createElement('br');
+        
+        if(message == ""){
+            var img = document.createElement('img');
+            img.className = "imageMessage";
+            img.src = 'data:image/jpeg;base64, ' + btoa(image);
+            li.textContent = `${user}: ${date} ${time}`;
+            li.appendChild(mybr);
+            li.appendChild(img);
+        }
+        else if(image == null){
+            li.textContent = `${user}: ${message} ${date} ${time}`;
+        }
     }
 });
 
 connection.on("ReceiveActiveRooms", (activeRooms) => {
     console.log("Active rooms:", activeRooms);
 
-    // Handle the list of active rooms, e.g., update UI
     updateRoomList(activeRooms);
 });
 
 connection.on("InvalidUsername", (errorMessage) => {
-    // Handle the invalid username message, e.g., display an error to the user
     console.error("Invalid username:", errorMessage);
 });
 
 function updateRoomList(activeRooms) {
     const roomList = document.getElementById("roomSelector");
-    roomList.innerHTML = "";  // Clear existing list
+    roomList.innerHTML = "";
 
     activeRooms.forEach((room) => {
         const li = document.createElement("option");
@@ -52,13 +59,26 @@ connection.on("ReceiveMessage", function (msg) {
         console.log(msg);
         var li = document.createElement("li");
         document.getElementById("messagesList").appendChild(li);
-        // var datum = new Date(time).toLocaleDateString("sr-RS");
-        // var vreme = new Date(time).toLocaleTimeString("sr-RS");
-        // We can assign user-supplied strings to an element's textContent because it
-        // is not interpreted as markup. If you're assigning in any other way, you 
-        // should be aware of possible script injection concerns.
-        // li.textContent = `${user} says ${text} at ${datum} : ${vreme}`;
-        li.textContent = `${msg.user}: ${msg.text}`;
+        let user = msg.user;
+        let message = msg.text;
+        let image = msg.image;
+        let dateTime = msg.time;
+        var dt = new Date(dateTime);
+        var date = dt.toLocaleDateString();
+        var time = dt.toLocaleTimeString("sr-Latn-RS", {hour: '2-digit', minute:'2-digit'});
+        var mybr = document.createElement('br');
+
+        if(message == ""){
+            var img = document.createElement('img');
+            img.className = "imageMessage";
+            img.src = 'data:image/jpeg;base64, ' + btoa(image);
+            li.textContent = `${user}: ${date} ${time}`;
+            li.appendChild(mybr);
+            li.appendChild(img);
+        }
+        else if(image == null){
+            li.textContent = `${user}: ${message} ${date} ${time}`;
+        }
 });
 
 connection.start().then(function () {
@@ -84,8 +104,10 @@ document.getElementById("addRoom").addEventListener("click", function (event) {
         return console.error(err.toString());
     });
     event.preventDefault();
-    console.log(room)
+    alert("Succesfully created room " + room);
 });
+
+
 
 document.getElementById("joinRoom").addEventListener("click", function (event) {
     let x = document.getElementById("userInput").value;
@@ -96,6 +118,8 @@ document.getElementById("joinRoom").addEventListener("click", function (event) {
     document.querySelector("#sendButton").style.visibility = 'visible';
     document.querySelector("#messageInput").style.visibility = 'visible';
     document.querySelector("#messageParagraph").style.visibility = 'visible';
+    document.getElementById("selectImgLbl").style.visibility = 'visible';
+    document.getElementById("slika").style.visibility = 'visible';
     var room = document.getElementById("roomSelector").value;
     document.querySelector(".currentRoom").value = room;
     document.body.style.backgroundColor = "#402b80";
@@ -106,20 +130,71 @@ document.getElementById("joinRoom").addEventListener("click", function (event) {
         return console.error(err.toString());
     });
     event.preventDefault();
-    console.log(room)
+    alert("Successfully joined room " + room);
 });
 
 window.addEventListener("load", function() {
     document.querySelector("#sendButton").style.visibility = 'hidden';
     document.querySelector("#messageInput").style.visibility = 'hidden';
     document.querySelector("#messageParagraph").style.visibility = 'hidden';
+    document.getElementById("selectImgLbl").style.visibility = 'hidden';
+    document.getElementById("slika").style.visibility = 'hidden';
 })
+
+var binImage;
+
+function uploadFile(inputElement) {
+    var file = inputElement.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function() {
+        var data=(reader.result).split(',')[1];
+        var binaryBlob = atob(data);
+        console.log('Encoded Binary File String:', binaryBlob);
+        var currentRoom = document.getElementById("roomSelector").value;
+        var user = document.getElementById("userInput").value;
+        connection.invoke("SendImage", binaryBlob, currentRoom, user).catch(function (err) {
+            return console.error(err.toString());
+        });
+    }
+    reader.readAsDataURL(file);
+  }
+
+  connection.on("SendImage", (blob) => {
+        binImage = blob;
+  })
+
+
+
+document.getElementById("slika").addEventListener("change", function() {
+    document.getElementById("messageInput").disabled = true;
+})
+
+document.getElementById("messageInput").addEventListener("keyup", function() {
+    if(this.value.length != 0) {
+        document.getElementById("slika").disabled = true;
+        document.getElementById("submitImgBtn").disabled = true;
+    }
+    else {
+        document.getElementById("slika").disabled = false;
+        document.getElementById("submitImgBtn").disabled = false;
+    }
+})
+
+function updateDiv()
+{ 
+    $( "#messagesList" ).load(window.location.href + " #messagesList" );
+}
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var user = document.getElementById("userInput").value;
     var currentRoom = document.getElementById("roomSelector").value;
     var message = document.getElementById("messageInput").value;
-    connection.invoke("SendMessage", currentRoom, user, message).catch(function (err) {
+    var image = binImage;
+    document.getElementById("slika").disabled = false;
+    document.getElementById("messageInput").value = "";
+    document.getElementById("messageInput").disabled = false;
+    
+    connection.invoke("SendMessage", currentRoom, user, message, image).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
