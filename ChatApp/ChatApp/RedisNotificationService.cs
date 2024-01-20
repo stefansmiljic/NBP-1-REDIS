@@ -30,23 +30,16 @@ public class RedisNotificationService : BackgroundService
     }
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        /*while(!stoppingToken.IsCancellationRequested)
-        {
-            var (task, roomName) = PubSubEvent.WaitForMessage();
-            var message = await task;
-            Message msg = JsonSerializer.Deserialize<Message>(message);
-            await chatHub.Clients.Groups(roomName).SendAsync("ReceiveMessage",msg.user, msg.text, msg.time);
-            await database.StreamAddAsync($"send:{roomName}", "message", message);
-            PubSubEvent.ListenToRoom(roomName);
-        }*/
 
         var sub = mux.GetSubscriber().Subscribe("sendPubSub");
         sub.OnMessage(async (message)=>{
-            await database.StreamAddAsync("send", "message", message.Message);
+            // await database.StreamAddAsync("send", "message", message.Message);
             var msds = JsonSerializer.Deserialize<Message>(message.Message.ToString());
             await chatHub.Clients.Group(msds!.RoomName).SendAsync("ReceiveMessage",msds);
             //All.SendAsync("ReceiveMessage", msds.user, msds.text, msds.time);
         });
+
+        //var messages = database.StreamReadAsync("sendPubSub", "0-0");
 
         // 
         await Task.CompletedTask;

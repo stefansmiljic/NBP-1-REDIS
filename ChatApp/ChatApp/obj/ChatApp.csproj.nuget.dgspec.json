@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\NBP-1-REDIS\\ChatApp\\ChatApp\\ChatApp.csproj": {}
+    "d:\\AKADEMSKI MATERIJAL\\NBP PROJEKAT REDIS\\NBP-1-REDIS\\ChatApp\\ChatApp\\ChatApp.csproj": {}
   },
   "projects": {
-    "D:\\NBP-1-REDIS\\ChatApp\\ChatApp\\ChatApp.csproj": {
+    "d:\\AKADEMSKI MATERIJAL\\NBP PROJEKAT REDIS\\NBP-1-REDIS\\ChatApp\\ChatApp\\ChatApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\NBP-1-REDIS\\ChatApp\\ChatApp\\ChatApp.csproj",
+        "projectUniqueName": "d:\\AKADEMSKI MATERIJAL\\NBP PROJEKAT REDIS\\NBP-1-REDIS\\ChatApp\\ChatApp\\ChatApp.csproj",
         "projectName": "ChatApp",
-        "projectPath": "D:\\NBP-1-REDIS\\ChatApp\\ChatApp\\ChatApp.csproj",
-        "packagesPath": "C:\\Users\\stank\\.nuget\\packages\\",
-        "outputPath": "D:\\NBP-1-REDIS\\ChatApp\\ChatApp\\obj\\",
+        "projectPath": "d:\\AKADEMSKI MATERIJAL\\NBP PROJEKAT REDIS\\NBP-1-REDIS\\ChatApp\\ChatApp\\ChatApp.csproj",
+        "packagesPath": "C:\\Users\\Stefan\\.nuget\\packages\\",
+        "outputPath": "d:\\AKADEMSKI MATERIJAL\\NBP PROJEKAT REDIS\\NBP-1-REDIS\\ChatApp\\ChatApp\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\Visual Studio Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\stank\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Stefan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

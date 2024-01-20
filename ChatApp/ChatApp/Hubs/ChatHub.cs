@@ -36,6 +36,13 @@ namespace ChatApp.Hubs
 
         public async Task JoinRoom(string roomName)
         {
+            foreach(var idRoom in UserToRoomMap)
+            {
+                if(idRoom.Key == Context.ConnectionId)
+                {
+                    await Groups.RemoveFromGroupAsync(Context.ConnectionId, idRoom.Value);
+                }
+            }
             await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
             UserToRoomMap[Context.ConnectionId] = roomName;
             if (!ActiveRooms.Contains(roomName))
@@ -67,19 +74,23 @@ namespace ChatApp.Hubs
         public async Task SendMessage(string roomName, string user, string message)
         {
             var msgClass = new Message(message, user, DateTime.Now, roomName);
-            await redis.PublishAsync($"sendPubSub", JsonSerializer.Serialize<Message>(msgClass));
+            await redis.PublishAsync("sendPubSub", JsonSerializer.Serialize<Message>(msgClass));
+            await redis.StreamAddAsync("send", new NameValueEntry[]{new NameValueEntry("message", JsonSerializer.Serialize<Message>(msgClass))});
         }
 
         private async Task<List<Message>> GetOlderMessages(string roomName)
         {
-            var messages = await redis.StreamRangeAsync($"send:{roomName}");
+            var messages = await redis.StreamRangeAsync("send");
             var messageList = new List<Message>();
 
             foreach (var msg in messages)
             {
                 var msgStr = msg["message"];
+                if(msgStr.IsNullOrEmpty)
+                    continue;
                 var msgObj = JsonSerializer.Deserialize<Message>(msgStr);
-                messageList.Add(msgObj!);
+                if(msgObj.RoomName == roomName)
+                    messageList.Add(msgObj!);
             }
 
             return messageList;

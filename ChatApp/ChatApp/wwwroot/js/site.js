@@ -5,6 +5,7 @@ var prikaziPoruke = false;
 var poruka = false;
 
 connection.on("ReceiveMessageList", function (messagesFromRoom) {
+    document.getElementById("messagesList").innerHTML="";
     for(var i = 0; i<messagesFromRoom.length; i++ )
     {
         console.log(messagesFromRoom[i].text)
